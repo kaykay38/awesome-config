@@ -1,32 +1,35 @@
--- ===================================================================
--- Initialization
--- ===================================================================
+----------------------------------------------------------------------------
+--- VPN Widget
+--
+-- Depends: ip
+--
+--
+-- @author kaykay38
+-- @copyright 2021 kaykay38
+-- @widget vpn
+----------------------------------------------------------------------------
 local awful = require('awful')
 local wibox = require('wibox')
 local watch = awful.widget.watch
+local dpi = require('beautiful').xresources.apply_dpi
 
-local vpn_widget = wibox.widget.textbox()
-
-local leftpadding = 0
-local rightpadding = 0
-local toppadding = 0
-local bottompadding = 0
+local vpn_widget = wibox.widget {
+    widget = wibox.widget.textbox,
+    font = "11.5"
+}
+local vpn_button = wibox.widget {
+    vpn_widget,
+    widget = wibox.container.margin
+}
 
 watch("ip addr show tun0", 2,
     function(_, stdout)
         if(stdout == '' or stdout==nil or stdout == 'Device \"tun0\" does not exist.') then
             vpn_widget.text = ""
-            leftpadding = 0
-            rightpadding = 0
-            toppadding = 0
-            bottompadding = 0
+            vpn_button.margins = dpi(0)
         else
-            vpn_widget.font = "11.5"
             vpn_widget.text = "ﱾ"
-            leftpadding = 10
-            rightpadding = 10
-            toppadding = 5
-            bottompadding = 5
+            vpn_button.margins = dpi(7)
 
         end
           collectgarbage("collect")
@@ -34,4 +37,4 @@ watch("ip addr show tun0", 2,
     vpn_widget
 )
 
-return wibox.layout.margin(vpn_widget, leftpadding, rightpadding, toppadding, bottompadding)
+return vpn_button

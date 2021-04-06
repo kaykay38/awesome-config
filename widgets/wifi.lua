@@ -1,18 +1,18 @@
 ----------------------------------------------------------------------------
---- Simple Network Widget
+--- Simple Wifi Widget
 --
 -- Depends: iproute2, iw
 --
 --
--- @author manilarome &lt;gerome.matilla07@gmail.com&gt;
--- @copyright 2020 manilarome
--- @widget network
+-- @author manilarome &lt;gerome.matilla07@gmail.com&gt; kaykay38
+-- @copyright 2020 manilarome, 2021 kaykay38
+-- @widget wifi
 ----------------------------------------------------------------------------
 
 local awful = require('awful')
 local wibox = require('wibox')
 local gears = require('gears')
-local naughty = require('naughty') 
+local naughty = require('naughty')
 local dpi = require('beautiful').xresources.apply_dpi
 local clickable_container = require('widgets.clickable-container')
 
@@ -82,7 +82,7 @@ local return_button = function()
 
 	if [ $status_ping -eq 0 ];
 	then
-		echo 'Connected but no internet'
+        echo 'Connected but no internet'
 	fi
 	]=]
 

@@ -4,8 +4,8 @@
 -- Depends: iproute2, iw
 --
 --
--- @author manilarome &lt;gerome.matilla07@gmail.com&gt;
--- @copyright 2020 manilarome
+-- @author manilarome &lt;gerome.matilla07@gmail.com&gt; kaykay38
+-- @copyright 2020 manilarome, 2021 kaykay38
 -- @widget network
 ----------------------------------------------------------------------------
 

@@ -28,7 +28,7 @@ pastel.initialize = function()
    require("components.volume-adjust")
 
    -- Import panels
-   local top_panel = require("components.pastel.top-panel")
+   local top_panel = require("components.personal.top-panel")
 
    -- Set up each screen (add tags & panels)
    awful.screen.connect_for_each_screen(function(s)
