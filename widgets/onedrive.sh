@@ -1,5 +1,13 @@
 #!/usr/bin/bash
-#Show OneDrive status in awesome bar
+#---------------------------------------------------------------------------
+# OneDrive Status Script
+#
+# Depends: systemd, onedrive
+#
+#
+# @author kaykay38
+# @copyright 2020 kaykay38
+#---------------------------------------------------------------------------
 
 onedrivestatus="$(journalctl --user-unit onedrive  -n 5 | tail -n 1 | grep -oP 'onedrive\[.*\]: \K\w+')"
 if [[ "$onedrivestatus" = '' ]]; then
