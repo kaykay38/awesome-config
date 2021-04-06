@@ -18,7 +18,7 @@ local watch = require("awful.widget.watch")
 
 local onedrive_widget = wibox.widget{
     widget = wibox.widget.textbox,
-    font = "13"
+    font = "14"
 }
 
 local widget_button = wibox.widget {
