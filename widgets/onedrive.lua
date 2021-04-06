@@ -24,7 +24,7 @@ local onedrive_widget = wibox.widget{
 local widget_button = wibox.widget {
     {
         onedrive_widget,
-        margins = dpi(7),
+        margins = dpi(0),
         widget = wibox.container.margin
     },
     widget = clickable_container
@@ -57,29 +57,17 @@ local update_tooltip = function()
         journalctl --user-unit onedrive -n 5 | tail -n 1
         ]],
         function(stdout)
+            if stdout == nil or stdout == "" then
+                onedrive_tooltip:set_markup("OneDrive is disconnected")
+            end
         onedrive_tooltip:set_markup(stdout)
         end
     )
 end
 
-watch("journalctl --user-unit onedrive -n 5 | tail -n 1 | grep -o 'onedrive\\[.*\\]: \\K\\w+'", 1,
+watch("/home/mia/.config/awesome/widgets/onedrive.sh", 1,
     function(_, stdout)
-        if (stdout == "Downloading") then
-            onedrive_widget.text = " "
-            widget_button.margins = dpi(7)
-        elseif (stdout == "Uploading") then
-            onedrive_widget.text = " "
-            widget_button.margins = dpi(7)
-        elseif (stdout == "Creating" or stdout == "Deleting" or stdout == "Syncing" or stdout == "Moving") then
-            onedrive_widget.text = " "
-            widget_button.margins = dpi(7)
-        elseif (stdout == "Initializing" or stdout == "OneDrive" or stdout == "Sync") then
-            onedrive_widget.text = ""
-            widget_button.margins = dpi(7)
-        else
-            onedrive_widget.text = " ✗"
-            widget_button.margins = dpi(7)
-        end
+        onedrive_widget.text = stdout
         update_tooltip()
       collectgarbage("collect")
     end,

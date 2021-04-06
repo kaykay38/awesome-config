@@ -34,7 +34,7 @@ top_panel.create = function(s)
       ontop = true,
       height = beautiful.top_panel_height,
       width = s.geometry.width,
-      bg = "#21212180"
+      bg = "#21212180" --50% opacity
    })
 
    panel:setup {
