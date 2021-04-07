@@ -18,7 +18,7 @@ elif [[ "$onedrivestatus" = 'Uploading' ]]; then
     echo "     "
 elif [[  "$onedrivestatus" = 'Creating' || "$onedrivestatus" = 'Deleting' || "$onedrivestatus" = 'Syncing' || "$onedrivestatus" = 'Moving' ]]; then
     echo "     "
-elif [[  "$status" = 'Initializing' || "$status" = 'OneDrive' || "$status" = 'Sync' ]]; then
+elif [[  "$onedrivestatus" = 'Initializing' || "$onedrivestatus" = 'OneDrive' || "$onedrivestatus" = 'Sync' ]]; then
     echo "    "
 else
     echo "   ✗  "
