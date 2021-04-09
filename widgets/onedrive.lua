@@ -52,9 +52,10 @@ local onedrive_tooltip = awful.tooltip {
 
 -- Update tooltip
 local update_tooltip = function()
+    -- journalctl --user-unit onedrive -n 5 | tail -n 1 | sed 's/YOURHOSTNAME onedrive\[.*\]: /| /'
     awful.spawn.easy_async_with_shell(
         [[
-        journalctl --user-unit onedrive -n 5 | tail -n 1
+        journalctl --user-unit onedrive -n 5 | tail -n 1 | sed 's/ArchLinuxAMDpc onedrive\[.*\]: /| /'
         ]],
         function(stdout)
             if stdout == nil or stdout == "" then

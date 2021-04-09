@@ -41,7 +41,7 @@ apps = {
    lock = "betterlockscreen -l",
    fullScreenshot = "/home/mia/.config/.system/fullScreenshot.sh",
    curWindowScreenshot = "/home/mia/.config/.system/curWindowScreenshot.sh",
-   selectionScreenshot = "/home/mia/.config/.system/selectionScreenshot.sh",
+   selectionScreenshot = "flameshot gui",
    filebrowser = "pcmanfm"
 }
 

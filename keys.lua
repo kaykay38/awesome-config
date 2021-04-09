@@ -203,7 +203,7 @@ keys.globalkeys = gears.table.join(
       {description = "greenclip", group = "clipboard"}
    ),
 
-   -- start bluetooth
+   -- toggle bluetooth
    awful.key({modkey}, "b",
       function()
          awful.spawn("/usr/local/bin/bluetooth")
@@ -341,22 +341,31 @@ keys.globalkeys = gears.table.join(
       function()
          awful.spawn(apps.fullScreenshot, false)
       end,
-      {description = "full screenshot", group = "hotkeys"}
+      {description = "full screenshot", group = "utilities"}
    ),
 
    awful.key({modkey}, "Print",
       function()
          awful.spawn(apps.curWindowScreenshot, false)
       end,
-      {description = "current window screenshot", group = "hotkeys"}
+      {description = "current window screenshot", group = "utilities"}
    ),
 
    awful.key({modkey,"Shift"}, "Print",
       function()
          awful.spawn(apps.selectionScreenshot, false)
       end,
-      {description = "selection screenshot", group = "hotkeys"}
+      {description = "selection screenshot", group = "utilities"}
    ),
+
+   -- quit flameshot
+   awful.key({altkey}, "Print",
+      function()
+         awful.spawn("killall -9 /usr/bin/flameshot", false)
+      end,
+      {description = "quit flameshot", group = "utilities"}
+   ),
+
    -- =========================================
    -- RELOAD / QUIT AWESOME
    -- =========================================
