@@ -38,13 +38,13 @@ Dependencies
 - feh
 - Alacritty Terminal
 - rofi
-- Scrot
-- Flameshot
-- [My scripts](https://github.com/kaykay38/dotfiles/tree/main/.config/.system) for screenshots, and other things.
+- Scrot (screenshot utility)
+- Flameshot (screenshot utility)
+- [My scripts](https://github.com/kaykay38/dotfiles/tree/main/.config/.system) for screenshots and other things.
 
 #### Optional Dependencies
 - greenclip (clipboard manager)
-- Bat
+- bat (rust cat clone)
 
 Installation
 ------------

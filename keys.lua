@@ -490,13 +490,13 @@ keys.globalkeys = gears.table.join(
       function(c)
          resize_client(client.focus, "down")
       end,
-      {description = "resize window height down", group = "client"}
+      {description = "decrease window height", group = "client"}
    ),
    awful.key({modkey, "Control"}, "Up",
       function(c)
          resize_client(client.focus, "up")
       end,
-      {description = "resize window height up", group = "client"}
+      {description = "increase window height", group = "client"}
    ),
    awful.key({modkey, "Control"}, "Left",
       function(c)
@@ -514,13 +514,13 @@ keys.globalkeys = gears.table.join(
       function(c)
          resize_client(client.focus, "down")
       end,
-      {description = "resize window height down", group = "client"}
+      {description = "increase window height", group = "client"}
    ),
    awful.key({ modkey, "Control" }, "k",
       function(c)
          resize_client(client.focus, "up")
       end,
-      {description = "resize window height up", group = "client"}
+      {description = "decrease window height", group = "client"}
    ),
    awful.key({modkey, "Control"}, "h",
       function(c)
