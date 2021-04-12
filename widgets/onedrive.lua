@@ -34,7 +34,7 @@ widget_button:buttons(
     gears.table.join(
         awful.button({}, 1, nil,
             function()
-                awful.spawn("alacritty -e journalctl --user-unit onedrive -n 50", false)
+                awful.spawn("alacritty -e onedrive-log", false)
             end
         )
     )
@@ -52,10 +52,10 @@ local onedrive_tooltip = awful.tooltip {
 
 -- Update tooltip
 local update_tooltip = function()
-    -- journalctl --user-unit onedrive -n 5 | tail -n 1 | sed 's/YOURHOSTNAME onedrive\[.*\]: /| /'
+    -- journalctl --user-unit onedrive -n 1 | tail -n 1 | sed 's/YOURHOSTNAME .*\[.*\]: /| /'
     awful.spawn.easy_async_with_shell(
         [[
-        journalctl --user-unit onedrive -n 5 | tail -n 1 | sed 's/ArchLinuxAMDpc onedrive\[.*\]: /| /'
+        journalctl --user-unit onedrive -n 1 | tail -n 1 | sed 's/ArchLinuxAMDpc .*\[.*\]: /| /'
         ]],
         function(stdout)
             if stdout == nil or stdout == "" then

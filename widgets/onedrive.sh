@@ -6,20 +6,20 @@
 #
 #
 # @author kaykay38
-# @copyright 2020 kaykay38
+# @copyright 2021 kaykay38
 #---------------------------------------------------------------------------
-
-onedrivestatus="$(journalctl --user-unit onedrive  -n 5 | tail -n 1 | grep -oP 'onedrive\[.*\]: \K\w+')"
+onedrivelog="$(journalctl --user-unit onedrive  -n 1)"
+onedrivestatus="$(echo $onedrivelog | grep -oP 'onedrive\[.*\]: \K\w+')"
 if [[ "$onedrivestatus" = '' ]]; then
     echo ""
+elif [[  "$onedrivestatus" = 'Initializing' || "$onedrivestatus" = 'OneDrive' || "$onedrivestatus" = 'Starting' || "$onedrivestatus" = 'Sync' || "$onedrivestatus" = 'done' || "$onedrivestatus" = 'Internet' ]] || [[ ! -z "$(echo $onedrivelog | grep -o ' ... done')" ]]; then
+    echo "    "
 elif [[ "$onedrivestatus" = 'Downloading' ]]; then
     echo "     "
 elif [[ "$onedrivestatus" = 'Uploading' ]]; then
     echo "     "
 elif [[  "$onedrivestatus" = 'Creating' || "$onedrivestatus" = 'Deleting' || "$onedrivestatus" = 'Syncing' || "$onedrivestatus" = 'Moving' ]]; then
     echo "     "
-elif [[  "$onedrivestatus" = 'Initializing' || "$onedrivestatus" = 'OneDrive' || "$onedrivestatus" = 'Sync' || "$onedrivestatus" = 'done' ]]; then
-    echo "    "
 else
     echo "   ✗  "
 fi

@@ -35,9 +35,16 @@ Key Mappings
 
 Dependencies
 ------------
-- Alacritty Terminal
-- Scrot
 - feh
+- Alacritty Terminal
+- rofi
+- Scrot
+- Flameshot
+- [My scripts](https://github.com/kaykay38/dotfiles/tree/main/.config/.system) for screenshots, and other things.
+
+#### Optional Dependencies
+- greenclip (clipboard manager)
+- Bat
 
 Installation
 ------------

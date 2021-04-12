@@ -51,7 +51,7 @@ calendar.create = function(screen)
    -- Calendar Widget
    local month_calendar = awful.widget.calendar_popup.month({
       screen = screen,
-      start_sunday = true,
+      start_monday = true,
       spacing = 10,
       font = beautiful.title_font,
       long_weekdays = true,
