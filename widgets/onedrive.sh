@@ -8,11 +8,11 @@
 # @author kaykay38
 # @copyright 2021 kaykay38
 #---------------------------------------------------------------------------
-onedrivelog="$(journalctl --user-unit onedrive  -n 1)"
-onedrivestatus="$(echo $onedrivelog | grep -oP 'onedrive\[.*\]: \K\w+')"
+onedrivelog="$(journalctl --user-unit onedrive  -n 1 | tail -1)"
+onedrivestatus="$(echo $onedrivelog | grep -oP '.*\[.*\]: \K\w+')"
 if [[ "$onedrivestatus" = '' ]]; then
     echo ""
-elif [[  "$onedrivestatus" = 'Initializing' || "$onedrivestatus" = 'OneDrive' || "$onedrivestatus" = 'Starting' || "$onedrivestatus" = 'Sync' || "$onedrivestatus" = 'done' || "$onedrivestatus" = 'Internet' ]] || [[ ! -z "$(echo $onedrivelog | grep -o ' ... done')" ]]; then
+elif [[  "$onedrivestatus" = 'Initializing' || "$onedrivestatus" = 'OneDrive' ]] || [[ "$onedrivestatus" = 'onedrive' || "$onedrivestatus" = 'Starting' || "$onedrivestatus" = 'Sync' || "$onedrivestatus" = 'done' || "$onedrivestatus" = 'Internet' ]] || [[ ! -z "$(echo $onedrivelog | grep -o ' ... done')" ]]; then
     echo "    "
 elif [[ "$onedrivestatus" = 'Downloading' ]]; then
     echo "     "

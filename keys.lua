@@ -276,24 +276,24 @@ keys.globalkeys = gears.table.join(
       {description = "-10%", group = "hotkeys"}
    ),
 
-   -- ALSA volume control
+   -- Pulseaudio volume control
    awful.key({}, "XF86AudioRaiseVolume",
       function()
-         awful.spawn("amixer -D pulse sset Master 5%+", false)
+         awful.spawn("pamixer --allow-boost -i 5", false)
          awesome.emit_signal("volume_change")
       end,
       {description = "volume up", group = "hotkeys"}
    ),
    awful.key({}, "XF86AudioLowerVolume",
       function()
-         awful.spawn("amixer -D pulse sset Master 5%-", false)
+         awful.spawn("pamixer --allow-boost -d 5", false)
          awesome.emit_signal("volume_change")
       end,
       {description = "volume down", group = "hotkeys"}
    ),
    awful.key({}, "XF86AudioMute",
       function()
-         awful.spawn("amixer -D pulse set Master 1+ toggle", false)
+         awful.spawn("pamixer -t", false)
          awesome.emit_signal("volume_change")
       end,
       {description = "toggle mute", group = "hotkeys"}
@@ -397,6 +397,23 @@ keys.globalkeys = gears.table.join(
    -- CLIENT FOCUSING
    -- =========================================
 
+   -- Dashboard (show all open windows)
+   awful.key({modkey, altkey, "Control"}, "space",
+      function()
+         awful.spawn("skippy-xd")
+         raise_client()
+      end,
+      {description = "dashboard view all open windows", group = "client"}
+   ),
+
+   -- Rofi windows (show all open windows)
+   awful.key({modkey}, "w",
+      function()
+         awful.spawn(apps.windows)
+         raise_client()
+      end,
+      {description = "rofi list all open windows", group = "client"}
+   ),
    -- Focus client by direction (hjkl keys)
    awful.key({modkey}, "j",
       function()
@@ -476,10 +493,11 @@ keys.globalkeys = gears.table.join(
    -- =========================================
 
    -- Focus screen by index (cycle through screens)
-   awful.key({modkey}, "s",
+   awful.key({modkey, altkey}, "s",
       function()
          awful.screen.focus_relative(1)
-      end
+      end,
+      {description = "cycle focus screens", group = "client"}
    ),
 
    -- =========================================

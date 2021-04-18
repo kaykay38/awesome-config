@@ -24,7 +24,6 @@ local themes = {
 -- change this number to use the corresponding theme
 local theme = themes[1]
 local rofi_launcher_theme = "/home/mia/.config/rofi/themes/launchpad.rasi"
-local rofi_greenclip_theme = "/home/mia/.config/rofi/themes/grayscale-slate-border.rasi"
 
 -- define default apps (global variable so other components can access it)
 apps = {
@@ -36,8 +35,9 @@ apps = {
    terminal = "alacritty",
    tabbedTerminal = "tabbed -r 2 alacritty --embed \"\"",
    launcher = "rofi -show drun -show-icons",
+   windows = "rofi -show window -show-icons",
    launchpad = "rofi -normal-window -modi drun -show drun -theme " .. rofi_launcher_theme,
-    greenclip = "rofi -modi 'Clipboard:greenclip print' -show Clipboard -run-command '{cmd}' -theme " .. rofi_greenclip_theme,
+    greenclip = "rofi -modi 'Clipboard:greenclip print' -show Clipboard -run-command '{cmd}'",
    lock = "betterlockscreen -l",
    fullScreenshot = "/home/mia/.config/.system/fullScreenshot.sh",
    curWindowScreenshot = "/home/mia/.config/.system/curWindowScreenshot.sh",
@@ -146,7 +146,11 @@ client.connect_signal("mouse::enter", function(c)
    c:emit_signal("request::activate", "mouse_enter", {raise = false})
 end)
 
-
+-- Focus urgent clients automatically
+client.connect_signal("property::urgent", function(c)
+    c.minimized = false
+    c:jump_to()
+end)
 -- ===================================================================
 -- Screen Change Functions (ie multi monitor)
 -- ===================================================================
