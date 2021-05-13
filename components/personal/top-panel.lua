@@ -48,12 +48,15 @@ top_panel.create = function(s)
       {
          layout = wibox.layout.fixed.horizontal,
          wibox.layout.margin(wibox.widget.systray(), dpi(5), dpi(5), dpi(5), dpi(5)),
+         require("widgets.spotify")({
+			 font = 'NotoSans Nerd Font 9'
+		 }),
          require("widgets.onedrive"),
          require("widgets.vpn"),
          require("widgets.network")(),
          require("widgets.wifi")(),
-         wibox.layout.margin(require("widgets.calendar").create(s), dpi(5), dpi(5), dpi(5), dpi(5)),
-      }
+		 wibox.layout.margin(require("widgets.calendar").create(s), dpi(5), dpi(5), dpi(5), dpi(5)),
+	 }
    }
 
 

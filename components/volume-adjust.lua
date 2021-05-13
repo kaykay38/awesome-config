@@ -20,7 +20,7 @@ local dpi = beautiful.xresources.apply_dpi
 local offsetx = dpi(56)
 local offsety = dpi(300)
 local screen = awful.screen.focused()
-local icon_dir = gears.filesystem.get_configuration_dir() .. "/icons/volume/" .. beautiful.name .. "/"
+local icon_dir = gears.filesystem.get_configuration_dir() .. "/icons/volume/"
 
 
 -- ===================================================================
@@ -81,20 +81,29 @@ local hide_volume_adjust = gears.timer {
 -- show volume-adjust when "volume_change" signal is emitted
 awesome.connect_signal("volume_change",
    function()
+
       -- set new volume value
       awful.spawn.easy_async_with_shell(
-         "amixer sget Master | grep 'Right:' | awk -F '[][]' '{print $2}'| sed 's/[^0-9]//g'",
+		 "pamixer --get-mute",
          function(stdout)
-            local volume_level = tonumber(stdout)
-            volume_bar.value = volume_level
-            if (volume_level > 40) then
-               volume_icon:set_image(icon_dir .. "volume.png")
-            elseif (volume_level > 0) then
-               volume_icon:set_image(icon_dir .. "volume-low.png")
-            else
-               volume_icon:set_image(icon_dir .. "volume-off.png")
-            end
-         end,
+			local is_mute = stdout:match('false') or 'true'
+			  awful.spawn.easy_async_with_shell(
+				 "pamixer --get-volume",
+				 function(stdout2)
+					local volume_level = tonumber(stdout2)
+					volume_bar.value = volume_level
+	  				if (is_mute == 'true') then
+					   volume_icon:set_image(icon_dir .. "volume-off.png")
+					elseif (volume_level > 40) then
+					   volume_icon:set_image(icon_dir .. "volume.png")
+					elseif (volume_level > 0) then
+					   volume_icon:set_image(icon_dir .. "volume-low.png")
+					else	
+					   volume_icon:set_image(icon_dir .. "volume-off.png")
+					end
+				end, false
+			  )
+			end,
          false
       )
 

@@ -17,7 +17,6 @@ local naughty = require("naughty")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local hotkeys_popup = require("awful.hotkeys_popup")
-require("utilities.screenshot")
 -- Define mod keys
 local modkey = "Mod4"
 local altkey = "Mod1"
@@ -202,6 +201,8 @@ keys.globalkeys = gears.table.join(
       end,
       {description = "greenclip", group = "clipboard"}
    ),
+   -- show spotify song cover
+   awful.key({ modkey, }, "d", function () awful.spawn("spotify-cover") end, {description = "Spotify song cover", group = "music"}),
 
    -- toggle bluetooth
    awful.key({modkey}, "b",
@@ -300,19 +301,19 @@ keys.globalkeys = gears.table.join(
    ),
    awful.key({}, "XF86AudioNext",
       function()
-         awful.spawn("mpc next", false)
+         awful.spawn("playerctl next", false)
       end,
       {description = "next music", group = "hotkeys"}
    ),
    awful.key({}, "XF86AudioPrev",
       function()
-         awful.spawn("mpc prev", false)
+         awful.spawn("playerctl previous", false)
       end,
       {description = "previous music", group = "hotkeys"}
    ),
    awful.key({}, "XF86AudioPlay",
       function()
-         awful.spawn("mpc toggle", false)
+         awful.spawn("play-pause", false)
       end,
       {description = "play/pause music", group = "hotkeys"}
    ),
@@ -377,12 +378,20 @@ keys.globalkeys = gears.table.join(
    ),
 
    -- Quit Awesome
-   awful.key({modkey, "Shift"}, "Escape",
+   awful.key({modkey, "Control", "Shift"}, "Escape",
       function()
          -- emit signal to show the exit screen
          awesome.emit_signal("show_exit_screen")
       end,
-      {description = "toggle exit screen", group = "hotkeys"}
+      {description = "toggle exit screen", group = "system"}
+   ),
+
+   -- Quit Awesome
+   awful.key({modkey, "Shift"}, "Escape",
+      function()
+         awful.spawn("/home/mia/.config/.system/sysmenu", false)
+      end,
+      {description = "open power menu", group = "system"}
    ),
 
    awful.key({}, "XF86PowerOff",
@@ -390,7 +399,7 @@ keys.globalkeys = gears.table.join(
          -- emit signal to show the exit screen
          awesome.emit_signal("show_exit_screen")
       end,
-      {description = "toggle exit screen", group = "hotkeys"}
+      {description = "toggle exit screen", group = "system"}
    ),
 
    -- =========================================
@@ -472,20 +481,6 @@ keys.globalkeys = gears.table.join(
          raise_client()
       end,
       {description = "focus right", group = "client"}
-   ),
-
-   -- Focus client by index (cycle through clients)
-   awful.key({modkey}, "Tab",
-      function()
-         awful.client.focus.byidx(1)
-      end,
-      {description = "focus next by index", group = "client"}
-   ),
-   awful.key({modkey, "Shift"}, "Tab",
-      function()
-         awful.client.focus.byidx(-1)
-      end,
-      {description = "focus previous by index", group = "client"}
    ),
 
    -- =========================================
@@ -748,7 +743,9 @@ keys.clientkeys = gears.table.join(
       {description = "(un)maximize", group = "client"}
    )
 )
-
+-- ===================================================================
+-- Tag Key bindings
+-- ===================================================================
 -- Bind all key numbers to tags
 for i = 1, 9 do
    keys.globalkeys = gears.table.join(keys.globalkeys,
@@ -777,5 +774,20 @@ for i = 1, 9 do
       )
    )
 end
-
+-- keys.clientkeys = gears.table.join(
+--       awful.key({modkey}, "Tab",
+--          function()
+--             local screen = awful.screen.focused()
+--             awful.tag.viewnext(screen)
+--          end,
+--          {description = "view next tag", group = "tag"}
+--       ),
+--       awful.key({modkey,"Shift"}, "Tab",
+--          function()
+--             local screen = awful.screen.focused()
+--             awful.tag.viewprev(screen)
+--          end,
+--          {description = "view prev tag", group = "tag"}
+--       )
+-- )
 return keys

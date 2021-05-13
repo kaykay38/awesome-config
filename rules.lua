@@ -109,11 +109,14 @@ function rules.create(clientkeys, clientbuttons)
       },
       {
          rule_any = {
-            name = {
-              "albert - Albert",
-             }
-         }, properties = { floating = true, ontop =true, placement = awful.placement.centered, border_width = 0 }
-     },
+		  class = {
+			  "feh"
+		  },
+            -- name = {
+            --    "feh [1 of 1] - https://i.scdn.co/image/.*"       },
+         }, properties = {floating = true, ontop = true, placement = awful.placement.top_right
+		  }
+      },
 
       -- Fullscreen clients
       {

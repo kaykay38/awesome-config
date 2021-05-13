@@ -59,7 +59,7 @@ local run_on_start_up = {
     "picom -b",
     "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1",
     "greenclip daemon",
-   "unclutter"
+   "unclutter",
 }
 
 
@@ -102,6 +102,9 @@ local create_rules = require("rules").create
 awful.rules.rules = create_rules(keys.clientkeys, keys.clientbuttons)
 
 -- Define layouts
+-- dynamite.layout.layouts = {
+--    dynamite.layout.tabbed
+-- }
 awful.layout.layouts = {
    awful.layout.suit.tile.left,
    awful.layout.suit.fair.horizontal,
