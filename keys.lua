@@ -137,7 +137,7 @@ keys.globalkeys = gears.table.join(
    -- Spawn terminal
    awful.key({modkey}, "Return",
       function()
-         awful.spawn(apps.terminal)
+         awful.spawn(apps.tabbedTerminal)
       end,
       {description = "Default Terminal", group = "launcher"}
    ),
@@ -145,12 +145,12 @@ keys.globalkeys = gears.table.join(
    -- Spawn tabbed terminal
    awful.key({modkey, "Control"}, "Return",
       function()
-         awful.spawn(apps.tabbedTerminal)
+         awful.spawn(apps.terminal)
       end,
       {description = "Tabbed Default Terminal", group = "launcher"}
    ),
 
-   -- Spawn tabbed terminal
+   -- Spawn alternate terminal
    awful.key({modkey, "Control", "Shift"}, "Return",
       function()
          awful.spawn("/usr/bin/kitty")
