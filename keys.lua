@@ -178,14 +178,6 @@ keys.globalkeys = gears.table.join(
     awful.key({ modkey}, "s", hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
 
-   -- launch file browser
-   awful.key({modkey}, "F2",
-      function()
-         awful.spawn(apps.filebrowser)
-      end,
-      {description = "pcmanfm file browser", group = "applications"}
-   ),
-
    -- launch browser
    awful.key({modkey, altkey}, "space",
       function()
@@ -204,20 +196,20 @@ keys.globalkeys = gears.table.join(
    -- show spotify song cover
    awful.key({ modkey, }, "d", function () awful.spawn("spotify-cover") end, {description = "Spotify song cover", group = "music"}),
 
+   -- toggle dual monitors
+   awful.key({ modkey, "Shift"}, "d",
+       function ()
+           awful.spawn("/usr/local/bin/dual-vertical-left-monitor")
+       end,
+       {description = "toggle left vertical monitor", group = "screen"}
+   ),
+
    -- toggle bluetooth
    awful.key({modkey}, "b",
       function()
          awful.spawn("/usr/local/bin/bluetooth")
       end,
       {description = "toggle bluetooth", group = "system"}
-   ),
-
-   -- launch EWU VPN
-   awful.key({modkey}, "F3",
-      function()
-         awful.spawn(apps.vpn)
-      end,
-      {description = "EWU VPN", group = "system"}
    ),
 
    -- launch Pavucontrol
@@ -244,6 +236,22 @@ keys.globalkeys = gears.table.join(
       {description = "Youtube - brave", group = "applications"}
    ),
 
+   -- launch file browser
+   awful.key({modkey}, "F2",
+      function()
+         awful.spawn(apps.filebrowser)
+      end,
+      {description = "pcmanfm file browser", group = "applications"}
+   ),
+
+   -- launch EWU VPN
+   awful.key({modkey}, "F3",
+      function()
+         awful.spawn(apps.vpn)
+      end,
+      {description = "EWU VPN", group = "system"}
+   ),
+
    -- launch Discord
    awful.key({modkey}, "F4",
       function()
@@ -257,7 +265,7 @@ keys.globalkeys = gears.table.join(
       function()
          awful.spawn("/usr/local/bin/spotify")
       end,
-      {description="Spotify", group="applications"}
+      {description="Spotify", group="music"}
      ),
    -- =========================================
    -- FUNCTION KEYS
@@ -268,13 +276,13 @@ keys.globalkeys = gears.table.join(
       function()
          awful.spawn("xbacklight -inc 10", false)
       end,
-      {description = "+10%", group = "hotkeys"}
+      {description = "+10%", group = "function keys"}
    ),
    awful.key({}, "XF86MonBrightnessDown",
       function()
          awful.spawn("xbacklight -dec 10", false)
       end,
-      {description = "-10%", group = "hotkeys"}
+      {description = "-10%", group = "function keys"}
    ),
 
    -- Pulseaudio volume control
@@ -283,59 +291,44 @@ keys.globalkeys = gears.table.join(
          awful.spawn("pamixer --allow-boost -i 5", false)
          awesome.emit_signal("volume_change")
       end,
-      {description = "volume up", group = "hotkeys"}
+      {description = "volume up", group = "function keys"}
    ),
    awful.key({}, "XF86AudioLowerVolume",
       function()
          awful.spawn("pamixer --allow-boost -d 5", false)
          awesome.emit_signal("volume_change")
       end,
-      {description = "volume down", group = "hotkeys"}
+      {description = "volume down", group = "function keys"}
    ),
    awful.key({}, "XF86AudioMute",
       function()
          awful.spawn("pamixer -t", false)
          awesome.emit_signal("volume_change")
       end,
-      {description = "toggle mute", group = "hotkeys"}
+      {description = "toggle mute", group = "function keys"}
    ),
    awful.key({}, "XF86AudioNext",
       function()
          awful.spawn("playerctl next", false)
       end,
-      {description = "next music", group = "hotkeys"}
+      {description = "next music", group = "function keys"}
    ),
    awful.key({}, "XF86AudioPrev",
       function()
          awful.spawn("playerctl previous", false)
       end,
-      {description = "previous music", group = "hotkeys"}
+      {description = "previous music", group = "function keys"}
    ),
    awful.key({}, "XF86AudioPlay",
       function()
          awful.spawn("play-pause", false)
       end,
-      {description = "play/pause music", group = "hotkeys"}
+      {description = "play/pause music", group = "function keys"}
    ),
 
    -- =========================================
    -- SCREENSHOTS
    -- =========================================
-
-  --  awful.key({}, "Print",
-  --       Scrot_full,
-  --     {description = "full screenshot", group = "hotkeys"}
-  --  ),
-
-  --  awful.key({modkey}, "Print",
-  --       Scrot_window,
-  --     {description = "current window screenshot", group = "hotkeys"}
-  --  ),
-
-  --  awful.key({modkey,"Shift"}, "Print",
-  --       Scrot_selection,
-  --     {description = "selection screenshot", group = "hotkeys"}
-  --  ),
 
    --Screenshot on prtscn using scrot
    awful.key({}, "Print",
@@ -741,11 +734,27 @@ keys.clientkeys = gears.table.join(
          c:raise()
       end,
       {description = "(un)maximize", group = "client"}
-   )
-)
+   ),
+
 -- ===================================================================
 -- Tag Key bindings
 -- ===================================================================
+      awful.key({modkey}, "Tab",
+         function()
+            local screen = awful.screen.focused()
+            awful.tag.viewnext(screen)
+         end,
+         {description = "view next tag", group = "tag"}
+      ),
+      awful.key({modkey,"Shift"}, "Tab",
+         function()
+            local screen = awful.screen.focused()
+            awful.tag.viewprev(screen)
+         end,
+         {description = "view prev tag", group = "tag"}
+      )
+)
+
 -- Bind all key numbers to tags
 for i = 1, 9 do
    keys.globalkeys = gears.table.join(keys.globalkeys,
@@ -774,20 +783,4 @@ for i = 1, 9 do
       )
    )
 end
--- keys.clientkeys = gears.table.join(
---       awful.key({modkey}, "Tab",
---          function()
---             local screen = awful.screen.focused()
---             awful.tag.viewnext(screen)
---          end,
---          {description = "view next tag", group = "tag"}
---       ),
---       awful.key({modkey,"Shift"}, "Tab",
---          function()
---             local screen = awful.screen.focused()
---             awful.tag.viewprev(screen)
---          end,
---          {description = "view prev tag", group = "tag"}
---       )
--- )
 return keys
