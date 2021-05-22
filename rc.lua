@@ -55,7 +55,8 @@ network_interfaces = {
 
 -- List of apps to run on start-up
 local run_on_start_up = {
-   "xset r rate 200 95",
+	"/home/mia/.config/screenlayout/dual-vertical-left-monitor",
+    "xset r rate 200 95",
     "picom -b",
     "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1",
     "greenclip daemon",
