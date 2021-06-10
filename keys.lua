@@ -175,7 +175,7 @@ keys.globalkeys = gears.table.join(
    ),
 
    -- show currently playing media
-   awful.key({modkey, altkey}, "s",
+   awful.key({modkey, "Shfit"}, "s",
       function()
          awful.spawn("playerctl-info")
       end,
@@ -191,7 +191,7 @@ keys.globalkeys = gears.table.join(
    ),
 
    -- launch shortcut keys cheatsheet
-    awful.key({ modkey, "Shift" }, "s",
+    awful.key({ modkey }, "s",
         hotkeys_popup.show_help,
     {description="show help", group="awesome"}
     ),
@@ -284,7 +284,7 @@ keys.globalkeys = gears.table.join(
    ),
 
    -- launch Spotify
-    awful.key({ modkey }, "s",
+    awful.key({ modkey, altkey }, "s",
       function()
          awful.spawn("spotify")
       end,
