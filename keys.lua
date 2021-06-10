@@ -166,17 +166,35 @@ keys.globalkeys = gears.table.join(
       {description = "Rofi", group = "launcher"}
    ),
 
-   -- launch rofi
-   awful.key({altkey, "Control"}, "space",
+   -- launch mpv playlists
+   awful.key({modkey}, "p",
       function()
-         awful.spawn(apps.launchpad)
+         awful.spawn("mpvplaylist")
       end,
-      {description = "Rofi Launchpad", group = "launcher"}
+      {description = "mpv playlists", group = "media"}
+   ),
+
+   -- show currently playing media
+   awful.key({modkey, altkey}, "s",
+      function()
+         awful.spawn("playerctl-info")
+      end,
+      {description = "show currently playing media", group = "media"}
+   ),
+
+   -- launch rofi
+   awful.key({modkey}, "r",
+      function()
+         awful.spawn(apps.run)
+      end,
+      {description = "Rofi run", group = "launcher"}
    ),
 
    -- launch shortcut keys cheatsheet
-    awful.key({ modkey}, "s", hotkeys_popup.show_help,
-              {description="show help", group="awesome"}),
+    awful.key({ modkey, "Shift" }, "s",
+        hotkeys_popup.show_help,
+    {description="show help", group="awesome"}
+    ),
 
    -- launch browser
    awful.key({modkey, altkey}, "space",
@@ -194,7 +212,12 @@ keys.globalkeys = gears.table.join(
       {description = "greenclip", group = "clipboard"}
    ),
    -- show spotify song cover
-   awful.key({ modkey, }, "d", function () awful.spawn("spotify-cover") end, {description = "Spotify song cover", group = "music"}),
+   awful.key({ modkey, }, "d",
+        function ()
+            awful.spawn("spotify-cover")
+        end,
+        {description = "Spotify song cover", group = "media"}
+    ),
 
    -- toggle dual monitors
    awful.key({ modkey, "Shift"}, "d",
@@ -261,11 +284,11 @@ keys.globalkeys = gears.table.join(
    ),
 
    -- launch Spotify
-    awful.key({ modkey, "Shift"}, "s",
+    awful.key({ modkey }, "s",
       function()
-         awful.spawn("/usr/local/bin/spotify")
+         awful.spawn("spotify")
       end,
-      {description="Spotify", group="music"}
+      {description="Spotify", group="media"}
      ),
    -- =========================================
    -- FUNCTION KEYS
@@ -309,19 +332,19 @@ keys.globalkeys = gears.table.join(
    ),
    awful.key({}, "XF86AudioNext",
       function()
-         awful.spawn("playerctl next", false)
+         awful.spawn("playerctl --player=spotify,spotifyd,mpv,%any next", false)
       end,
       {description = "next music", group = "function keys"}
    ),
    awful.key({}, "XF86AudioPrev",
       function()
-         awful.spawn("playerctl previous", false)
+         awful.spawn("playerctl --player=spotify,spotifyd,mpv,%any previous", false)
       end,
       {description = "previous music", group = "function keys"}
    ),
    awful.key({}, "XF86AudioPlay",
       function()
-         awful.spawn("play-pause", false)
+         awful.spawn("playerctl --player=spotify,spotifyd,mpv,%any play-pause", false)
       end,
       {description = "play/pause music", group = "function keys"}
    ),
@@ -416,21 +439,35 @@ keys.globalkeys = gears.table.join(
       end,
       {description = "rofi list all open windows", group = "client"}
    ),
+    awful.key({ modkey,           }, "j",
+        function ()
+            awful.client.focus.byidx( 1)
+    	    raise_client()
+        end,
+        {description = "focus next client", group = "client"}
+    ),
+    awful.key({ modkey,           }, "k",
+        function ()
+            awful.client.focus.byidx(-1)
+    		raise_client()
+        end,
+        {description = "focus previous client", group = "client"}
+    ),
    -- Focus client by direction (hjkl keys)
-   awful.key({modkey}, "j",
-      function()
-         awful.client.focus.bydirection("down")
-         raise_client()
-      end,
-      {description = "focus down", group = "client"}
-   ),
-   awful.key({modkey}, "k",
-      function()
-         awful.client.focus.bydirection("up")
-         raise_client()
-      end,
-      {description = "focus up", group = "client"}
-   ),
+   -- awful.key({modkey}, "j",
+   --    function()
+   --       awful.client.focus.bydirection("down")
+   --       raise_client()
+   --    end,
+   --    {description = "focus down", group = "client"}
+   -- ),
+   -- awful.key({modkey}, "k",
+   --    function()
+   --       awful.client.focus.bydirection("up")
+   --       raise_client()
+   --    end,
+   --    {description = "focus up", group = "client"}
+   -- ),
    awful.key({modkey}, "h",
       function()
          awful.client.focus.bydirection("left")
@@ -438,6 +475,7 @@ keys.globalkeys = gears.table.join(
       end,
       {description = "focus left", group = "client"}
    ),
+
    awful.key({modkey}, "l",
       function()
          awful.client.focus.bydirection("right")
@@ -454,6 +492,7 @@ keys.globalkeys = gears.table.join(
       end,
       {description = "focus down", group = "client"}
    ),
+
    awful.key({modkey}, "Up",
       function()
          awful.client.focus.bydirection("up")
@@ -461,27 +500,27 @@ keys.globalkeys = gears.table.join(
       end,
       {description = "focus up", group = "client"}
    ),
-   awful.key({modkey}, "Left",
-      function()
-         awful.client.focus.bydirection("left")
-         raise_client()
-      end,
-      {description = "focus left", group = "client"}
-   ),
-   awful.key({modkey}, "Right",
-      function()
-         awful.client.focus.bydirection("right")
-         raise_client()
-      end,
-      {description = "focus right", group = "client"}
-   ),
+   -- awful.key({modkey}, "Left",
+   --    function()
+   --       awful.client.focus.bydirection("left")
+   --       raise_client()
+   --    end,
+   --    {description = "focus left", group = "client"}
+   -- ),
+   -- awful.key({modkey}, "Right",
+   --    function()
+   --       awful.client.focus.bydirection("right")
+   --       raise_client()
+   --    end,
+   --    {description = "focus right", group = "client"}
+   -- ),
 
    -- =========================================
    -- SCREEN FOCUSING
    -- =========================================
 
    -- Focus screen by index (cycle through screens)
-   awful.key({modkey, altkey}, "s",
+   awful.key({modkey, altkey}, "Control", "s",
       function()
          awful.screen.focus_relative(1)
       end,
@@ -661,42 +700,50 @@ keys.clientkeys = gears.table.join(
    awful.key({modkey, "Shift"}, "Down",
       function(c)
          move_client(c, "down")
-      end
+      end,
+	  {description = "move client down", group = "client"}
    ),
    awful.key({modkey, "Shift"}, "Up",
       function(c)
          move_client(c, "up")
-      end
+      end,
+	  {description = "move client up", group = "client"}
    ),
    awful.key({modkey, "Shift"}, "Left",
       function(c)
          move_client(c, "left")
-      end
+      end,
+	  {description = "move client left", group = "client"}
    ),
    awful.key({modkey, "Shift"}, "Right",
       function(c)
          move_client(c, "right")
-      end
+      end,
+	  {description = "move client right", group = "client"}
    ),
    awful.key({modkey, "Shift"}, "j",
       function(c)
          move_client(c, "down")
-      end
+      end,
+	  {description = "move client down", group = "client"}
    ),
    awful.key({modkey, "Shift"}, "k",
       function(c)
          move_client(c, "up")
-      end
+      end,
+	  {description = "move client up", group = "client"}
    ),
    awful.key({modkey, "Shift"}, "h",
       function(c)
          move_client(c, "left")
-      end
+      end,
+	  {description = "move client left", group = "client"}
    ),
    awful.key({modkey, "Shift"}, "l",
       function(c)
          move_client(c, "right")
-      end
+      end,
+	  {description = "move client right", group = "client"}
    ),
 
    -- toggle fullscreen
@@ -723,6 +770,7 @@ keys.clientkeys = gears.table.join(
    awful.key({modkey}, "n",
       function(c)
          c.minimized = true
+		 c:raise()
       end,
       {description = "minimize", group = "client"}
    ),
@@ -734,25 +782,25 @@ keys.clientkeys = gears.table.join(
          c:raise()
       end,
       {description = "(un)maximize", group = "client"}
-   ),
+   )
+)
 
 -- ===================================================================
 -- Tag Key bindings
 -- ===================================================================
-      awful.key({modkey}, "Tab",
-         function()
-            local screen = awful.screen.focused()
-            awful.tag.viewnext(screen)
-         end,
-         {description = "view next tag", group = "tag"}
-      ),
-      awful.key({modkey,"Shift"}, "Tab",
-         function()
-            local screen = awful.screen.focused()
-            awful.tag.viewprev(screen)
-         end,
-         {description = "view prev tag", group = "tag"}
-      )
+keys.globalkeys = gears.table.join(keys.globalkeys,
+    awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
+              {description = "view previous tag", group = "tag"}),
+    awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
+              {description = "view next tag", group = "tag"}),
+  awful.key({modkey}, "Tab",
+        awful.tag.viewnext,
+     {description = "view next tag", group = "tag"}
+  ),
+  awful.key({modkey,"Shift"}, "Tab",
+        awful.tag.viewprev,
+     {description = "view prev tag", group = "tag"}
+  )
 )
 
 -- Bind all key numbers to tags
@@ -776,6 +824,7 @@ for i = 1, 9 do
                local tag = client.focus.screen.tags[i]
                if tag then
                   client.focus:move_to_tag(tag)
+				  raise_client()
                end
             end
          end,

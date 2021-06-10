@@ -4,8 +4,7 @@
 -- More details could be found here:
 -- https://github.com/streetturtle/awesome-wm-widgets/tree/master/spotify-widget
 
--- @author Pavel Makhov
--- @copyright 2020 Pavel Makhov
+-- @author Pavel Makhov, kaykay38
 -------------------------------------------------
 
 local awful = require("awful")
@@ -47,6 +46,11 @@ local function worker(user_args)
             widget = wibox.widget.imagebox,
         },
         {
+            id = 'artistw',
+            font = font,
+            widget = wibox.widget.textbox,
+        },
+        {
             layout = wibox.container.scroll.horizontal,
             max_size = 100,
             step_function = wibox.container.scroll.step_functions.waiting_nonlinear_back_and_forth,
@@ -56,11 +60,6 @@ local function worker(user_args)
                 font = font,
                 widget = wibox.widget.textbox
             }
-        },
-        {
-            id = 'artistw',
-            font = font,
-            widget = wibox.widget.textbox,
         },
         layout = wibox.layout.align.horizontal,
         set_status = function(self, is_playing)
@@ -75,14 +74,14 @@ local function worker(user_args)
                 self:get_children_by_id('artistw')[1]:emit_signal('widget::redraw_needed')
             end
         end,
-        set_text = function(self, artist, song)
-            local title_to_display = " " .. ellipsize(song, max_length) .. "  - "
-            if self:get_children_by_id('titlew')[1]:get_markup() ~= title_to_display then
-                self:get_children_by_id('titlew')[1]:set_markup(title_to_display)
-            end
-            local artist_to_display = " " .. ellipsize(artist, max_length) .. " "
+        set_text = function(self, artist, title)
+            local artist_to_display = " " .. ellipsize(artist, max_length) .. "  - "
             if self:get_children_by_id('artistw')[1]:get_markup() ~= artist_to_display then
                 self:get_children_by_id('artistw')[1]:set_markup(artist_to_display)
+            end
+            local title_to_display = " " .. ellipsize(title, max_length) .. " "
+            if self:get_children_by_id('titlew')[1]:get_markup() ~= title_to_display then
+                self:get_children_by_id('titlew')[1]:set_markup(title_to_display)
             end
         end
     }
@@ -101,7 +100,6 @@ local function worker(user_args)
         end
 
         local escaped = string.gsub(stdout, "&", '&amp;')
-		local album_cover = '/tmp/spotify-song-cover'
         local album, _, artist, title =
             string.match(escaped, 'Album%s*(.*)\nAlbumArtist%s*(.*)\nArtist%s*(.*)\nTitle%s*(.*)\n')
         if album ~= nil and title ~=nil and artist ~= nil then

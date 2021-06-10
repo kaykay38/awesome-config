@@ -34,7 +34,7 @@ top_panel.create = function(s)
       ontop = true,
       height = beautiful.top_panel_height,
       width = s.geometry.width,
-      bg = "#21212180" --50% opacity
+      -- bg = "#21212199" --50% opacity
    })
 
    panel:setup {
@@ -48,9 +48,10 @@ top_panel.create = function(s)
       {
          layout = wibox.layout.fixed.horizontal,
          wibox.layout.margin(wibox.widget.systray(), dpi(5), dpi(5), dpi(5), dpi(5)),
-         require("widgets.spotify")({
-			 font = 'NotoSans Nerd Font 9'
-		 }),
+         require("widgets.playerctl"),
+		 --          require("widgets.spotify")({
+		 -- 			 font = 'NotoSans Nerd Font 10'
+		 -- }),
          require("widgets.onedrive"),
          require("widgets.vpn"),
          require("widgets.network")(),

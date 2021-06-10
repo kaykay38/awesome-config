@@ -67,11 +67,11 @@ local function list_update(w, buttons, label, data, objects)
          tbm = cache.tbm
          ibm = cache.ibm
       else
-         local icondpi = 10
+         local icondpi = 5
          ib = wibox.widget.imagebox()
          tb = wibox.widget.textbox()
          bgb = wibox.container.background()
-         tbm = wibox.container.margin(tb, dpi(4), dpi(16))
+         tbm = wibox.container.margin(tb, dpi(2), dpi(32))
          ibm = wibox.container.margin(ib, dpi(icondpi), dpi(icondpi), dpi(icondpi), dpi(icondpi))
          l = wibox.layout.fixed.horizontal()
          bg_clickable = clickable_container()
@@ -107,6 +107,9 @@ local function list_update(w, buttons, label, data, objects)
       bgb:set_bgimage(bg_image)
       if icon then
          ib.image = icon
+      elif text then
+         ib.text = text
+      else
       else
          ibm:set_margins(0)
       end
@@ -160,8 +163,7 @@ tag_list.create = function(s)
          )
       ),
       {},
-      list_update,
-      wibox.layout.fixed.vertical()
+      list_update
    )
 end
 

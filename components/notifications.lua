@@ -27,7 +27,6 @@ naughty.config.defaults.ontop = true
 naughty.config.defaults.icon_size = dpi(32)
 naughty.config.defaults.screen = awful.screen.focused()
 naughty.config.defaults.timeout = 3
-naughty.config.defaults.title = "System Notification"
 naughty.config.defaults.margin = dpi(10)
 naughty.config.defaults.border_width = 0
 naughty.config.defaults.position = "top_right"
@@ -38,7 +37,7 @@ end
 naughty.config.padding = dpi(7)
 naughty.config.spacing = dpi(7)
 naughty.config.icon_dirs = {
-   "/usr/share/icons/Tela-dark",
+   "/usr/share/icons/Papirus",
    "/usr/share/pixmaps/"
 }
 naughty.config.icon_formats = {"png", "svg"}
@@ -69,8 +68,6 @@ naughty.config.presets.critical = {
    timeout = 0
 }
 
-
--- Changing spotify notifications.
 naughty.config.presets.spotify = {
     -- if you want to disable Spotify notifications completely, return false
     callback = function()
@@ -96,7 +93,22 @@ naughty.config.presets.scrot = {
     -- Guessing the value, find a way to fit it to the proper size later
     icon_size = 180,
 }
+
+-- Changing system notifications.
+naughty.config.presets.system = {
+    -- if you want to disable Spotify notifications completely, return false
+    callback = function()
+        return true
+    end,
+
+    width  = 400,
+    -- Guessing the value, find a way to fit it to the proper size later
+    icon_size = 140,
+}
+
 table.insert(naughty.dbus.config.mapping, {{appname = "Scrot"}, naughty.config.presets.scrot})
+table.insert(naughty.dbus.config.mapping, {{title = "System Notification"}, naughty.config.presets.system})
+table.insert(naughty.dbus.config.mapping, {{appname = "mpv"}, naughty.config.presets.spotify})
 
 naughty.config.presets.ok = naughty.config.presets.normal
 naughty.config.presets.info = naughty.config.presets.normal

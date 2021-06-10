@@ -18,7 +18,8 @@ local awful = require("awful")
 
 local themes = {
    "personal", -- 1
-   "mirage", -- 2
+   "personal-tag-list", -- 2
+   "mirage", -- 3
 }
 
 -- change this number to use the corresponding theme
@@ -35,6 +36,7 @@ apps = {
    terminal = "alacritty",
    tabbedTerminal = "tabbed -c -r 2 alacritty --embed \"\"",
    launcher = "rofi -show drun -show-icons",
+   run = "rofi -show run",
    windows = "rofi -show window -show-icons",
    launchpad = "rofi -normal-window -modi drun -show drun -theme " .. rofi_launcher_theme,
     greenclip = "rofi -modi 'Clipboard:greenclip print' -show Clipboard -run-command '{cmd}'",
@@ -55,7 +57,6 @@ network_interfaces = {
 
 -- List of apps to run on start-up
 local run_on_start_up = {
-	"/home/mia/.config/screenlayout/dual-vertical-left-monitor",
     "xset r rate 200 95",
     "picom -b",
     "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1",
@@ -134,6 +135,13 @@ client.connect_signal("manage", function (c)
       -- Prevent clients from being unreachable after screen count changes.
       awful.placement.no_offscreen(c)
    end
+
+   if c.class == nil then c.minimized = true
+      c:connect_signal("property::class", function ()
+         c.minimized = false
+            awful.rules.apply(c)
+      end)
+   end
 end)
 
 
@@ -155,6 +163,9 @@ client.connect_signal("property::urgent", function(c)
     c.minimized = false
     c:jump_to()
 end)
+
+client.connect_signal("focus", function(c) c.border_color = "#777777" end)
+client.connect_signal("unfocus", function(c) c.border_color = "#393939" end)
 -- ===================================================================
 -- Screen Change Functions (ie multi monitor)
 -- ===================================================================
