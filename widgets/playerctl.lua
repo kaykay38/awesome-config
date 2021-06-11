@@ -1,12 +1,12 @@
 ----------------------------------------------------------------------------
 --- Playerctl Widget
 --
--- Depends: playerctl, sb-playerctl
+-- Dependencies: playerctl, sb-playerctl
 --
 --
 -- @author kaykay38
 -- @copyright 2021 kaykay38
--- @widget onedrive
+-- @widget playerctl
 ----------------------------------------------------------------------------
 
 local awful = require('awful')

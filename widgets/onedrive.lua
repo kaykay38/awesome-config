@@ -46,8 +46,8 @@ local onedrive_tooltip = awful.tooltip {
     mode = 'outside',
     align = 'right',
     preferred_positions = {'left', 'right', 'top', 'bottom'},
-    margin_leftright = dpi(8),
-    margin_topbottom = dpi(8)
+    margin_leftright = dpi(5),
+    margin_topbottom = dpi(5)
 }
 
 -- Update tooltip

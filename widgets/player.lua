@@ -1,10 +1,12 @@
 -------------------------------------------------
--- Spotify Widget for Awesome Window Manager
--- Shows currently playing song on Spotify for Linux client
--- More details could be found here:
--- https://github.com/streetturtle/awesome-wm-widgets/tree/master/spotify-widget
+-- Media Widget for Awesome Window Manager
+-- Shows metadata for currently playing video/audio
 
--- @author Pavel Makhov, kaykay38
+-- Dependencies: playerctl, playerstatus & tooltip-playerctl scripts
+
+-- Adapted from https://github.com/streetturtle/awesome-wm-widgets/tree/master/spotify-widget
+
+-- @author kaykay38, Pavel Makhov
 -------------------------------------------------
 
 local awful = require("awful")
@@ -23,6 +25,7 @@ local function ellipsize(text, length)
 end
 
 local player_widget = {}
+local widget_button = {}
 
 local function worker(user_args)
 
@@ -58,7 +61,6 @@ local function worker(user_args)
             widget = wibox.widget.textbox,
         },
         {
-            -- max_size = 180,
             id = 'titlew',
             font = font,
             widget = wibox.widget.textbox,
@@ -78,7 +80,7 @@ local function worker(user_args)
                 else
                     self.icon.image = mpv_pause_icon
                 end
-            else
+            elseif current_player == "any" then
                 if is_playing and play_icon then
                     self.icon.image = play_icon
                 else
@@ -97,11 +99,12 @@ local function worker(user_args)
         end,
 
         set_text = function(self, artist, title)
-            if cur_artist ~= "" then
-                local artist_to_display = " " .. ellipsize(artist, artist_max_length) .. "  - "
-                if self:get_children_by_id('artistw')[1]:get_markup() ~= artist_to_display then
-                    self:get_children_by_id('artistw')[1]:set_markup(artist_to_display.." ")
-                end
+            local artist_to_display = ""
+            if artist ~= "" then
+                artist_to_display = " " .. ellipsize(artist, artist_max_length) .. "  - "
+            end
+            if self:get_children_by_id('artistw')[1]:get_markup() ~= artist_to_display then
+                self:get_children_by_id('artistw')[1]:set_markup(artist_to_display)
             end
             local title_to_display = ellipsize(title, title_max_length) .. " "
             if self:get_children_by_id('titlew')[1]:get_markup() ~= title_to_display then
@@ -110,10 +113,10 @@ local function worker(user_args)
         end
     }
 
-    local widget_button = {
+    widget_button = {
         {
             player_widget,
-            margins = dpi(0),
+            margins = dpi(2),
             widget = wibox.container.margin
         },
         widget = clickable_container
@@ -121,12 +124,20 @@ local function worker(user_args)
 
     local update_widget_icon = function(widget, stdout, _, _, _)
         stdout = string.gsub(stdout, "\n", "")
+        if string.match(stdout, 'no players') then
+            widget:set_text('','')
+            widget:set_visible(false)
+            player_widget.margins = dpi(0);
+            return
+        end
         local current_player, status = string.match(stdout, '(.*)%s(.*)')
         widget:set_status(current_player, status == 'playing')
+        widget:set_visible(true)
     end
 
     local update_widget_text = function(widget, stdout, _, _, _)
-        if string.find(stdout, 'Error: Spotify is not running.') ~= nil then
+        stdout = string.gsub(stdout, "\n", "")
+        if string.match(stdout, 'no players') then
             widget:set_text('','')
             widget:set_visible(false)
             player_widget.margins = dpi(0);
@@ -147,33 +158,31 @@ local function worker(user_args)
             cur_album = album
 			else cur_album = ""
         end
-
-            widget:set_text(artist, title)
-            widget:set_visible(true)
+        widget:set_text(cur_artist, cur_title)
+        widget:set_visible(true)
     end
 
     watch(GET_STATUS_CMD, timeout, update_widget_icon, player_widget)
     watch(GET_CURRENT_SONG_CMD, timeout, update_widget_text, player_widget)
 
-    --- Adds mouse controls to the widget:
-    --  - left click - play/pause
-    --  - scroll down - play next song
-    --  - scroll up - play previous song
-    player_widget:connect_signal("button::press", function(_, _, _, button)
-        if (button == 1) then
-            awful.spawn("playerctl --player=spotify,mpv,%any play-pause", false)      -- left click
-        elseif (button == 3) then
-            awful.spawn("playerctl-info", false)      -- right click
-        elseif (button == 4) then
-            awful.spawn("playerctl --player=spotify,mpv,%any next", false)  -- scroll down
-        elseif (button == 5) then
-            awful.spawn("playerctl --player=spotify,mpv,%any previous", false)  -- scroll up
-        end
-        awful.spawn.easy_async(GET_STATUS_CMD, function(stdout, stderr, exitreason, exitcode)
-            update_widget_icon(player_widget, stdout, stderr, exitreason, exitcode)
-        end)
-    end)
-
+    -- Adds mouse controls to the widget:
+      -- left click - play/pause
+      -- scroll down - play next song
+      -- scroll up - play previous song
+     player_widget:connect_signal("button::press", function(_, _, _, button)
+         if (button == 1) then
+             awful.spawn("playerctl --player=spotify,mpv,%any play-pause", false)      -- left click
+         elseif (button == 3) then
+             awful.spawn("playerctl-info", false)      -- right click
+         elseif (button == 4) then
+             awful.spawn("playerctl --player=spotify,mpv,%any next", false)  -- scroll down
+         elseif (button == 5) then
+             awful.spawn("playerctl --player=spotify,mpv,%any previous", false)  -- scroll up
+         end
+         awful.spawn.easy_async(GET_STATUS_CMD, function(stdout, stderr, exitreason, exitcode)
+             update_widget_icon(player_widget, stdout, stderr, exitreason, exitcode)
+         end)
+     end)
 
     if show_tooltip then
         local player_tooltip = awful.tooltip {
@@ -202,7 +211,6 @@ local function worker(user_args)
         )
     end
 
-    -- return player_widget
     return widget_button
 
 end
