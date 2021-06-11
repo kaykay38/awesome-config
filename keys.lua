@@ -585,25 +585,25 @@ keys.globalkeys = gears.table.join(
    -- =========================================
 
    -- Number of master clients
-   awful.key({modkey, altkey}, "h",
+   awful.key({modkey, altkey}, "Shift", "h",
       function()
          awful.tag.incnmaster( 1, nil, true)
       end,
       {description = "increase the number of master clients", group = "layout"}
    ),
-   awful.key({ modkey, altkey }, "l",
+   awful.key({ modkey, altkey },"Shift", "l",
       function()
          awful.tag.incnmaster(-1, nil, true)
       end,
       {description = "decrease the number of master clients", group = "layout"}
    ),
-   awful.key({ modkey, altkey }, "Left",
+   awful.key({ modkey, altkey },"Shift", "Left",
       function()
          awful.tag.incnmaster( 1, nil, true)
       end,
       {description = "increase the number of master clients", group = "layout"}
    ),
-   awful.key({ modkey, altkey }, "Right",
+   awful.key({ modkey, altkey }, "Shfit", "Right",
       function()
          awful.tag.incnmaster(-1, nil, true)
       end,
@@ -793,13 +793,13 @@ keys.globalkeys = gears.table.join(keys.globalkeys,
               {description = "view previous tag", group = "tag"}),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
               {description = "view next tag", group = "tag"}),
-  awful.key({modkey}, "Tab",
-        awful.tag.viewnext,
-     {description = "view next tag", group = "tag"}
-  ),
-  awful.key({modkey,"Shift"}, "Tab",
+  awful.key({modkey, altkey}, "h",
         awful.tag.viewprev,
      {description = "view prev tag", group = "tag"}
+  ),
+  awful.key({modkey, altkey}, "l",
+        awful.tag.viewnext,
+     {description = "view next tag", group = "tag"}
   )
 )
 
