@@ -43,6 +43,7 @@ local function worker(user_args)
     local dim_opacity = args.dim_opacity or 0.2
     local title_max_length = args.title_max_length or 40
     local artist_max_length = args.artist_max_length or 25
+    local max_length = title_max_length + artist_max_length + 8
     local show_tooltip = args.show_tooltip == nil and true or args.show_tooltip
     local timeout = args.timeout or 1
 
@@ -62,6 +63,7 @@ local function worker(user_args)
         },
         {
             id = 'titlew',
+			max_length = max_length,
             font = font,
             widget = wibox.widget.textbox,
         },
@@ -104,9 +106,9 @@ local function worker(user_args)
                 artist_to_display = " " .. ellipsize(artist, artist_max_length) .. "  - "
             end
             if self:get_children_by_id('artistw')[1]:get_markup() ~= artist_to_display then
-                self:get_children_by_id('artistw')[1]:set_markup(artist_to_display)
+                self:get_children_by_id('artistw')[1]:set_markup(artist_to_display.." ")
             end
-            local title_to_display = ellipsize(title, title_max_length) .. " "
+            local title_to_display = ellipsize(title, title_max_length) .. "  "
             if self:get_children_by_id('titlew')[1]:get_markup() ~= title_to_display then
                 self:get_children_by_id('titlew')[1]:set_markup(title_to_display)
             end
@@ -116,7 +118,7 @@ local function worker(user_args)
     widget_button = {
         {
             player_widget,
-            margins = dpi(2),
+            margins = dpi(0),
             widget = wibox.container.margin
         },
         widget = clickable_container
@@ -188,23 +190,25 @@ local function worker(user_args)
         local player_tooltip = awful.tooltip {
             mode = 'outside',
             preferred_positions = {'bottom'},
+			margin_leftright = dpi(6),
+			margin_topbottom = dpi(6)
          }
 
         player_tooltip:add_to_object(player_widget)
 
         player_widget:connect_signal('mouse::enter',
             function()
-                if cur_album ~= nil and cur_album ~= "" and 
-                   cur_artist ~= nil and cur_artist ~= "" and
-                   cur_title ~= nil and cur_title ~= "" then
+                if cur_album ~= "" and
+                   cur_artist ~= "" and
+                   cur_title ~= "" then
                     player_tooltip.markup = '<b>Title</b>: ' .. cur_title
                     .. '\n<b>Artist</b>: ' .. cur_artist
                     .. '\n<b>Album</b>: ' .. cur_album
-              elseif cur_artist ~= nil and cur_artist ~= "" and
-                   cur_title ~= nil and cur_title ~= "" then
+              elseif cur_artist ~= "" and
+                   cur_title ~= "" then
                     player_tooltip.markup = '<b>Title</b>: ' .. cur_title
                     .. '\n<b>Artist</b>: ' .. cur_artist
-                elseif cur_title ~= nil and cur_title ~= "" then
+                elseif cur_title ~= "" then
                     player_tooltip.markup = '<b>Title</b>: ' .. cur_title
                 end
             end
