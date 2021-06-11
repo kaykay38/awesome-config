@@ -107,9 +107,6 @@ local function list_update(w, buttons, label, data, objects)
       bgb:set_bgimage(bg_image)
       if icon then
          ib.image = icon
-      elif text then
-         ib.text = text
-      else
       else
          ibm:set_margins(0)
       end

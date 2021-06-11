@@ -65,45 +65,43 @@ local widget_tooltip = awful.tooltip {
     margin_topbottom = dpi(8)
 }
 
-local cur_title = nil
-local cur_artist = nil
-local cur_album = nil
--- Update tooltip
 local update_tooltip = function()
-    -- journalctl --user-unit onedrive -n 1 | tail -n 1 | sed 's/YOURHOSTNAME .*\[.*\]: /| /'
+	local cur_title = nil
+	local cur_artist = nil
+	local cur_album = nil
     awful.spawn.easy_async_with_shell(
         [[
-			playerctl --player=spotify,mpv,%any metadata --format "{{title}}\n{{artist}}\n{{album}}"
+			/usr/local/bin/tooltip-playerctl
         ]],
         function(stdout)
             if stdout ~= nil or stdout ~= "" then
-				local escaped = string.gsub(stdout, "&", '&amp;')
-				local title, artist, album = string.match(escaped, '(.*)\\n(.*)\\n(.*)')
-				-- local title, artist, album = string.match(stdout, '(.*)\n(.*)\n(.*)')
-				if title ~=nil then
+				local title, artist, album = string.match(stdout, '(.*)\\n(.*)\\n(.*)')
+				if  title ~= "" and title ~=nil and not string.match(title,"^\r?\n$") then
 					cur_title = title
 				end
-				if artist ~= nil then
+				if artist ~= "" and artist ~= nil and not string.match(artist,"^\r?\n$") then
 					cur_artist = artist
 				end
-				if album ~= nil then
+				if album ~= "" and album ~= nil and not string.match(album,"^\r?\n$") then
 					cur_album = album
 				end
             end
 			playerctl_widget:connect_signal('mouse::enter',
 				function()
-					if cur_album ~= "" and cur_album ~= nil and
-						cur_artist ~= "" and cur_artist ~= nil and
-						cur_title ~= "" and cur_title ~= nil then
+					if cur_album ~= nil and
+						cur_artist ~= nil and
+						cur_title ~= nil then
 						widget_tooltip.markup = '<b>Title</b>: ' .. cur_title
 						.. '\n<b>Artist</b>: ' .. cur_artist
 						.. '\n<b>Album</b>: ' .. cur_album
-					elseif cur_artist ~= "" and cur_artist ~= nil and
-						cur_title ~= "" and cur_title ~= nil then
+					elseif cur_artist ~= nil and
+						cur_title ~= nil then
 						widget_tooltip.markup = '<b>Title</b>: ' .. cur_title
 						.. '\n<b>Artist</b>: ' .. cur_artist
-					elseif cur_title ~= "" and cur_title ~= nil then
+					elseif cur_title ~= nil then
 						widget_tooltip.markup = '<b>Title</b>: ' .. cur_title
+					-- else
+					-- 		widget_tooltip.markup = 'No metadata'
 					end
 				end
 			)

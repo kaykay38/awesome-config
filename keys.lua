@@ -175,7 +175,7 @@ keys.globalkeys = gears.table.join(
    ),
 
    -- show currently playing media
-   awful.key({modkey, "Shfit"}, "s",
+   awful.key({modkey, "Shift"}, "s",
       function()
          awful.spawn("playerctl-info")
       end,

@@ -76,7 +76,7 @@ naughty.config.presets.spotify = {
 
     -- Adjust the size of the notification
     height = 160,
-    width  = 400,
+    width  = 450,
     -- Guessing the value, find a way to fit it to the proper size later
     icon_size = 150
 }
@@ -84,7 +84,7 @@ table.insert(naughty.dbus.config.mapping, {{appname = "Spotify"}, naughty.config
 
 -- Changing scrot notifications.
 naughty.config.presets.scrot = {
-    -- if you want to disable Spotify notifications completely, return false
+    -- if you want to disable scrot notifications completely, return false
     callback = function()
         return true
     end,
@@ -94,21 +94,22 @@ naughty.config.presets.scrot = {
     icon_size = 180,
 }
 
--- Changing system notifications.
-naughty.config.presets.system = {
-    -- if you want to disable Spotify notifications completely, return false
+-- Changing player notifications.
+naughty.config.presets.player = {
+    -- if you want to disable player notifications completely, return false
     callback = function()
         return true
     end,
 
-    width  = 400,
+    width  = 450,
     -- Guessing the value, find a way to fit it to the proper size later
-    icon_size = 140,
+    icon_size = 150,
 }
 
 table.insert(naughty.dbus.config.mapping, {{appname = "Scrot"}, naughty.config.presets.scrot})
-table.insert(naughty.dbus.config.mapping, {{title = "System Notification"}, naughty.config.presets.system})
-table.insert(naughty.dbus.config.mapping, {{appname = "mpv"}, naughty.config.presets.spotify})
+table.insert(naughty.dbus.config.mapping, {{appname = "Player"}, naughty.config.presets.player})
+table.insert(naughty.dbus.config.mapping, {{title = "System Notification"}, naughty.config.presets.player})
+table.insert(naughty.dbus.config.mapping, {{appname = "mpv"}, naughty.config.presets.player})
 
 naughty.config.presets.ok = naughty.config.presets.normal
 naughty.config.presets.info = naughty.config.presets.normal

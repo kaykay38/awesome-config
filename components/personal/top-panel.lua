@@ -17,6 +17,7 @@ local dpi = beautiful.xresources.apply_dpi
 -- import widgets
 local task_list = require("widgets.task-list")
 local tag_list = require("widgets.tag-list_horizontal")
+-- local tag_list = require("widgets.tag-list")
 
 
 -- define module table
@@ -48,10 +49,10 @@ top_panel.create = function(s)
       {
          layout = wibox.layout.fixed.horizontal,
          wibox.layout.margin(wibox.widget.systray(), dpi(5), dpi(5), dpi(5), dpi(5)),
-         require("widgets.playerctl"),
-		 --          require("widgets.spotify")({
-		 -- 			 font = 'NotoSans Nerd Font 10'
-		 -- }),
+         -- require("widgets.playerctl"),
+         require("widgets.player")({
+         font = 'NotoSans Nerd Font 10'
+		 }),
          require("widgets.onedrive"),
          require("widgets.vpn"),
          require("widgets.network")(),
