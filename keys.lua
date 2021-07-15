@@ -246,17 +246,17 @@ keys.globalkeys = gears.table.join(
    -- launch Canvas
    awful.key({modkey, altkey}, "Return",
       function()
-         awful.spawn("brave https://canvas.ewu.edu/")
+         awful.spawn(apps.browser.." https://canvas.ewu.edu/")
       end,
-      {description = "Canvas - brave", group = "applications"}
+      {description = "Canvas", group = "applications"}
    ),
 
    -- launch Youtube
    awful.key({modkey}, "F1",
       function()
-         awful.spawn("brave https://youtube.com/")
+         awful.spawn(apps.browser.." https://youtube.com/")
       end,
-      {description = "Youtube - brave", group = "applications"}
+      {description = "Youtube", group = "applications"}
    ),
 
    -- launch file browser

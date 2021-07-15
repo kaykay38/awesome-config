@@ -50,6 +50,7 @@ top_panel.create = function(s)
          layout = wibox.layout.fixed.horizontal,
          wibox.layout.margin(wibox.widget.systray(), dpi(5), dpi(5), dpi(5), dpi(5)),
          -- require("widgets.playerctl"),
+         require("widgets.weather"),
          require("widgets.player")({
          font = 'NotoSans Nerd Font 10'
 		 }),

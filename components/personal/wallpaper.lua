@@ -22,11 +22,10 @@ local naughty = require("naughty")
 
 local is_blurred = false;
 
-local wallpaper_dir = "/home/mia/Pictures/Wallpapers/"
-local wallpaper = wallpaper_dir .. "gaetan-weltzer-challenge-11-painting5-1920.jpg"
+local wallpaper_dir = "/home/mia/.config/xwallpaper/"
+local wallpaper = wallpaper_dir .. "wallpaper"
 -- local blurred_wallpaper = wallpaper_dir .. "gaetan-weltzer-challenge-11-painting5-1920-blurred.jpg"
 
-awful.spawn.with_shell("xwallpaper --zoom " .. wallpaper)
 
 --- Check if a file or directory exists in this path
 local function exists(file)
@@ -39,6 +38,8 @@ local function exists(file)
    end
    return ok, err
 end
+
+awful.spawn.with_shell("xwallpaper --zoom " .. wallpaper)
 
 -- -- check if blurred wallpaper needs to be created
 -- if not exists(blurred_wallpaper) then
