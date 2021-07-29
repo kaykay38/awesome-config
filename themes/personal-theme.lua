@@ -81,7 +81,7 @@ theme.top_panel_height = dpi(26)
 theme.notification_max_width = dpi(350)
 
 -- System Tray
-theme.bg_systray = "#6d6b6a"
+theme.bg_systray = "#352630"
 theme.systray_icon_spacing = dpi(10)
 
 -- Titlebars

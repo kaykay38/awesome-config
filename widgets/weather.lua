@@ -18,7 +18,7 @@ local watch = require("awful.widget.watch")
 
 local weather_widget = wibox.widget{
     widget = wibox.widget.textbox,
-    font = "NotoSans Nerd Font 11"
+    font = "NotoSans Nerd Font 10.5"
 }
 
 local widget_button = wibox.widget {
@@ -40,15 +40,15 @@ widget_button:buttons(
     )
 )
 
--- local onedrive_tooltip = awful.tooltip {
---     text = 'Loading...',
---     objects = {widget_button},
---     mode = 'outside',
---     align = 'right',
---     preferred_positions = {'left', 'right', 'top', 'bottom'},
---     margin_leftright = dpi(5),
---     margin_topbottom = dpi(5)
--- }
+local weather_tooltip = awful.tooltip {
+    text = 'Spokane, WA current weather',
+    objects = {widget_button},
+    mode = 'outside',
+    align = 'right',
+    preferred_positions = {'left', 'right', 'top', 'bottom'},
+    margin_leftright = dpi(5),
+    margin_topbottom = dpi(5)
+}
 
 -- Update tooltip
 -- local update_tooltip = function()
@@ -61,7 +61,7 @@ widget_button:buttons(
 --             if stdout == nil or stdout == "" then
 --                 onedrive_tooltip:set_markup("OneDrive is disconnected")
 --             end
---         onedrive_tooltip:set_markup(stdout)
+--         weather_tooltip:set_markup(stdout)
 --         end
 --     )
 -- end
