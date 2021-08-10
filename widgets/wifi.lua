@@ -202,20 +202,20 @@ local return_button = function()
 			local message = 'Wi-Fi network has been disconnected'
 			local title = 'Connection Disconnected'
 			local app_name = 'System Notification'
-			local icon = widget_icon_dir .. 'wifi-strength-off.svg'
+			local icon = widget_icon_dir .. 'wifi-off.svg'
 			network_notify(message, title, app_name, icon)
 		end
 
-		local widget_icon_name = 'wifi-strength-off'
+		local widget_icon_name = 'wifi-off'
 
 		if network_mode == 'wireless' then
-			widget_icon_name = 'wifi-strength-off'
+			widget_icon_name = 'wifi-off'
 			if not reconnect_startup then
 				update_reconnect_startup(true)
 				notify_wireless_disconnected()
 			end
         end
-		update_tooltip('Wifi is currently disconnected')
+		update_tooltip('Wifi disconnected')
 		widget.icon:set_image(widget_icon_dir .. widget_icon_name .. '.svg')
 	end
 
