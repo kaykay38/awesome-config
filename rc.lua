@@ -35,11 +35,14 @@ apps = {
    power_manager = "", -- recommended: xfce4-power-manager
    terminal = "alacritty",
    tabbedTerminal = "tabbed -c -r 2 alacritty --embed \"\"",
-   launcher = "rofi -show drun -show-icons",
-   run = "rofi -show run",
-   windows = "rofi -show window -show-icons",
-   launchpad = "rofi -normal-window -modi drun -show drun -theme " .. rofi_launcher_theme,
-   greenclip = "rofi -modi 'Clipboard:greenclip print' -show Clipboard -run-command '{cmd}'",
+   -- terminal = "st",
+   -- tabbedTerminal = "tabbed -c -r 2 st -w ''",
+   emoji_selector = "rofiemoji",
+   launcher = "rofi -no-lazy-grab -show drun -modi drun -theme ~/.config/rofi/config.rasi",
+   run = "rofi -no-lazy-grab -show run -modi run -theme ~/.config/rofi/text.rasi",
+   windows = "rofi -no-lazy-grab -modi window -show window -show-icons -theme ~/.config/rofi/config.rasi",
+   launchpad = "rofi -no-lazy-grab -normal-window -modi drun -show drun -theme " .. rofi_launcher_theme,
+   greenclip = "rofi -no-lazy-grab -modi 'CLIPBOARD:greenclip print' -show CLIPBOARD -run-command '{cmd}' -theme ~/.config/rofi/text.rasi",
    lock = "betterlockscreen -l",
    fullScreenshot = "/home/mia/.config/.system/fullScreenshot.sh",
    curWindowScreenshot = "/home/mia/.config/.system/curWindowScreenshot.sh",
@@ -108,6 +111,7 @@ awful.rules.rules = create_rules(keys.clientkeys, keys.clientbuttons)
 --    dynamite.layout.tabbed
 -- }
 awful.layout.layouts = {
+   awful.layout.suit.tile,
    awful.layout.suit.tile.left,
    awful.layout.suit.fair.horizontal,
    awful.layout.suit.floating,

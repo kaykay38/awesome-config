@@ -174,6 +174,14 @@ keys.globalkeys = gears.table.join(
       {description = "mpv playlists", group = "media"}
    ),
 
+   -- launch mpv playlists
+   awful.key({modkey}, "e",
+      function()
+         awful.spawn(apps.emoji_selector)
+      end,
+      {description = "emoji selector", group = "launcher"}
+   ),
+
    -- show currently playing media
    awful.key({modkey, "Shift"}, "s",
       function()
