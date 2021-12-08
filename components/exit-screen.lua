@@ -67,7 +67,7 @@ local exit_screen_grabber
 
 local function suspend_command()
    exit_screen.hide()
-   awful.spawn.with_shell(apps.lock .. " & systemctl suspend")
+   awful.spawn.with_shell("systemctl suspend")
 end
 
 local function exit_command()
@@ -89,11 +89,24 @@ local function reboot_command()
    awful.keygrabber.stop(exit_screen_grabber)
 end
 
+local function hibernate_command()
+   awful.spawn.with_shell("systemctl hibernate")
+   awful.keygrabber.stop(exit_screen_grabber)
+end
+
 local poweroff = build_button(ICON_DIR .. "power.png", "Shutdown")
 poweroff:connect_signal(
    "button::release",
    function()
       poweroff_command()
+   end
+)
+
+local hibernate = build_button(ICON_DIR .. "hibernate.png", "Hibernate")
+hibernate:connect_signal(
+   "button::release",
+   function()
+      hibernate_command()
    end
 )
 
@@ -149,6 +162,8 @@ awesome.connect_signal("show_exit_screen",
                poweroff_command()
             elseif key == "r" then
                reboot_command()
+            elseif key == "h" then
+               hibernate_command()
             elseif key == "Escape" or key == "q" or key == "x" then
                exit_screen.hide()
             end
@@ -207,6 +222,7 @@ exit_screen.widget:setup {
       nil,
       {
          poweroff,
+         hibernate,
          reboot,
          suspend,
          exit,

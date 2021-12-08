@@ -30,7 +30,7 @@ calendar.create = function(screen)
    -- Clock / Calendar 12h format
    -- Get Time/Date format using `man strftime`
    -- ◆
-   local clock_widget = wibox.widget.textclock("<span font='" .. "NotoSans Nerd Font 10.5" .."'>%a %B %d  |  %l:%M %p</span>", 1)
+   local clock_widget = wibox.widget.textclock(" <span>%a %b %d  |  %l:%M %p</span> ", 1)
 
    -- Alternative to naughty.notify - tooltip. You can compare both and choose the preferred one
    awful.tooltip({

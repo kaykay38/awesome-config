@@ -37,7 +37,7 @@ personal.initialize = function()
       do
          awful.tag.add(i, {
             icon = gears.filesystem.get_configuration_dir() .. "/icons/tags/personal/" .. i .. ".svg",
-            layout = awful.layout.suit.tile.left,
+            layout = awful.layout.suit.tile,
             screen = s,
             selected = i == 1
          })

@@ -15,10 +15,15 @@ local gears = require('gears')
 local dpi = require('beautiful').xresources.apply_dpi
 local clickable_container = require('widgets.clickable-container')
 local watch = require("awful.widget.watch")
+-- local beautiful = require('beautiful')
+
+local location = {"Spokane","WA"}
+-- local location = {"Yiyang","Hunan"}
+local url = "https://weather.com/weather/today/l/Spokane+WA?canonicalCityId=784528c5dca98e8cd5ea2ce0c075e263b2c1b9d2f03d3942f5cad896e2276751"
+-- local url="https://weather.com/weather/today/l/Yiyang+Hunan+People's+Republic+of+China?canonicalCityId=f384de187fe2a6b51324439f3344f9d716a3842d48e581bf2333a003c62f860b"
 
 local weather_widget = wibox.widget{
     widget = wibox.widget.textbox,
-    font = "NotoSans Nerd Font 10.5"
 }
 
 local widget_button = wibox.widget {
@@ -34,14 +39,20 @@ widget_button:buttons(
     gears.table.join(
         awful.button({}, 1, nil,
             function()
-                awful.spawn("xdg-open https://weather.com/weather/today/l/Spokane+WA?canonicalCityId=784528c5dca98e8cd5ea2ce0c075e263b2c1b9d2f03d3942f5cad896e2276751", false)
+                awful.spawn('xdg-open "'..url..'"', false)
             end
         )
+        -- awful.button({}, 2, nil,
+        --     function()
+        --         awful.spawn("", false)
+        --     end
+        -- )
+
     )
 )
 
 local weather_tooltip = awful.tooltip {
-    text = 'Spokane, WA current weather',
+    text = location[1]..", "..location[2]..' current weather',
     objects = {widget_button},
     mode = 'outside',
     align = 'right',
@@ -50,23 +61,7 @@ local weather_tooltip = awful.tooltip {
     margin_topbottom = dpi(5)
 }
 
--- Update tooltip
--- local update_tooltip = function()
---     -- journalctl --user-unit onedrive -n 1 | tail -n 1 | sed 's/YOURHOSTNAME .*\[.*\]: /| /'
---     awful.spawn.easy_async_with_shell(
---         [[
---         journalctl --user-unit onedrive -n 1 | tail -n 1 | sed 's/ArchLinuxAMDpc .*\[.*\]: /| /'
---         ]],
---         function(stdout)
---             if stdout == nil or stdout == "" then
---                 onedrive_tooltip:set_markup("OneDrive is disconnected")
---             end
---         weather_tooltip:set_markup(stdout)
---         end
---     )
--- end
-
-watch("/usr/local/bin/awm-weather", 300,
+watch("awm-weather".." "..location[1]..' "'..url..'"', 300,
     function(_, stdout)
         weather_widget.text = stdout
         -- update_tooltip()

@@ -20,7 +20,7 @@ local naughty = require("naughty")
 -- ===================================================================
 
 
-local is_blurred = false;
+-- local is_blurred = false;
 
 local wallpaper_dir = "/home/mia/.config/xwallpaper/"
 local wallpaper = wallpaper_dir .. "wallpaper"

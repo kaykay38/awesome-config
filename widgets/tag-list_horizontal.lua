@@ -67,11 +67,11 @@ local function list_update(w, buttons, label, data, objects)
          tbm = cache.tbm
          ibm = cache.ibm
       else
-         local icondpi = 5
+         local icondpi = 6
          ib = wibox.widget.imagebox()
          tb = wibox.widget.textbox()
          bgb = wibox.container.background()
-         tbm = wibox.container.margin(tb, dpi(2), dpi(32))
+         tbm = wibox.container.margin(tb, dpi(2), dpi(24))
          ibm = wibox.container.margin(ib, dpi(icondpi), dpi(icondpi), dpi(icondpi), dpi(icondpi))
          l = wibox.layout.fixed.horizontal()
          bg_clickable = clickable_container()

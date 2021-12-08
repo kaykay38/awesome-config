@@ -109,13 +109,12 @@ function rules.create(clientkeys, clientbuttons)
       },
       {
          rule_any = {
-		  class = {
-			  "feh"
-		  },
+            class = {
+               "feh"
+            },
             -- name = {
             --    "feh [1 of 1] - https://i.scdn.co/image/.*"       },
-         }, properties = {floating = true, ontop = true, placement = awful.placement.top_right
-		  }
+         }, properties = {floating = true, ontop = true, placement = awful.placement.top_right}
       },
 
       -- Fullscreen clients
@@ -132,9 +131,30 @@ function rules.create(clientkeys, clientbuttons)
       {
          rule_any = {
             class = {
+               "discord"
+            },
+         }, properties = {switchtotag = true, tag = '2'}
+      },
+      {
+         rule_any = {
+            class = {
+               "zoom"
+            },
+         }, properties = {switchtotag = true, tag = '2'}
+      },
+      {
+         rule_any = {
+            class = {
+               "Microsoft Teams - Preview"
+            },
+         }, properties = {switchtotag = true, tag = '2'}
+      },
+      {
+         rule_any = {
+            class = {
                "Spotify"
             },
-         }, properties = {switchtotag = true, tag = '5'}
+         }, properties = {switchtotag = true, tag = '3'}
       },
       {
          rule_any = {
@@ -142,27 +162,6 @@ function rules.create(clientkeys, clientbuttons)
                "Gimp"
             },
          }, properties = {switchtotag = true, tag = '4'}
-      },
-      {
-         rule_any = {
-            class = {
-               "discord"
-            },
-         }, properties = {switchtotag = true, tag = '3'}
-      },
-      {
-         rule_any = {
-            class = {
-               "zoom"
-            },
-         }, properties = {switchtotag = true, tag = '3'}
-      },
-      {
-         rule_any = {
-            class = {
-               "Microsoft Teams - Preview"
-            },
-         }, properties = {switchtotag = true, tag = '3'}
       },
       {
          rule_any = {
@@ -190,8 +189,16 @@ function rules.create(clientkeys, clientbuttons)
             class = {
                "Steam"
             },
-         }, properties = {switchtotag = true, tag = '7'}
+         }, properties = {switchtotag = true, tag = '6'}
       },
+      {
+         rule_any = {
+            class = {
+               "ftb-app"
+            },
+         }, properties = {switchtotag = true, tag = '6'}
+      },
+
       -- Visualizer
       {
          rule_any = {name = {"cava"}},
@@ -224,7 +231,7 @@ function rules.create(clientkeys, clientbuttons)
       -- Pavucontrol & Bluetooth Devices
       {
          rule_any = {class = {"Pavucontrol"}, name = {"Bluetooth Devices"}},
-         properties = {floating = true, width = screen_width * 0.3, height = screen_height * 0.45}
+         properties = {floating = true, width = screen_width * 0.2, height = screen_height * 0.45}
       },
    }
 end

@@ -24,7 +24,7 @@ local onedrive_widget = wibox.widget{
 local widget_button = wibox.widget {
     {
         onedrive_widget,
-        margins = dpi(0),
+        margins = dpi(2),
         widget = wibox.container.margin
     },
     widget = clickable_container
@@ -47,7 +47,6 @@ local onedrive_tooltip = awful.tooltip {
     align = 'right',
     preferred_positions = {'left', 'right', 'top', 'bottom'},
     margin_leftright = dpi(5),
-    margin_topbottom = dpi(5)
 }
 
 -- Update tooltip
@@ -55,7 +54,7 @@ local update_tooltip = function()
     -- journalctl --user-unit onedrive -n 1 | tail -n 1 | sed 's/YOURHOSTNAME .*\[.*\]: /| /'
     awful.spawn.easy_async_with_shell(
         [[
-        journalctl --user-unit onedrive -n 1 | tail -n 1 | sed 's/ArchLinuxAMDpc .*\[.*\]: /| /'
+        journalctl --user-unit onedrive -n 1 | tail -n 1 | sed 's#ArchAMDpc .*\[.*\]:#| #'
         ]],
         function(stdout)
             if stdout == nil or stdout == "" then
@@ -66,7 +65,7 @@ local update_tooltip = function()
     )
 end
 
-watch("/home/mia/.config/awesome/widgets/onedrive.sh", 1,
+watch("/home/mia/.config/awesome/widgets/onedrive.sh", 5,
     function(_, stdout)
         onedrive_widget.text = stdout
         update_tooltip()

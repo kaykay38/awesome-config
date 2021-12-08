@@ -30,6 +30,7 @@ local rofi_launcher_theme = "/home/mia/.config/rofi/themes/launchpad.rasi"
 apps = {
    browser = "brave",
    vpn = "/home/mia/Security/autovpn",
+   power_menu = "/home/mia/Scripts/sysmenu",
    audio_mixer = "pavucontrol",
    network_manager = "alacritty -e nmtui", -- recommended: nm-connection-editor
    power_manager = "", -- recommended: xfce4-power-manager
@@ -43,11 +44,13 @@ apps = {
    windows = "rofi -no-lazy-grab -modi window -show window -show-icons -theme ~/.config/rofi/config.rasi",
    launchpad = "rofi -no-lazy-grab -normal-window -modi drun -show drun -theme " .. rofi_launcher_theme,
    greenclip = "rofi -no-lazy-grab -modi 'CLIPBOARD:greenclip print' -show CLIPBOARD -run-command '{cmd}' -theme ~/.config/rofi/text.rasi",
-   lock = "betterlockscreen -l",
-   fullScreenshot = "/home/mia/.config/.system/fullScreenshot.sh",
-   curWindowScreenshot = "/home/mia/.config/.system/curWindowScreenshot.sh",
-   selectionScreenshot = "flameshot gui",
-   filebrowser = "pcmanfm"
+   lock = "i3lock-script",
+   full_screenshot = "/home/mia/.config/.system/fullScreenshot.sh",
+   cur_window_screenshot = "/home/mia/.config/.system/curWindowScreenshot.sh",
+   selection_screenshot = "flameshot gui",
+   file_browser = "pcmanfm",
+   dual_monitor_horizontal="dual-horizontal-left-monitor"
+
 }
 
 -- define wireless and ethernet interface names for the network widget
@@ -61,10 +64,12 @@ network_interfaces = {
 -- List of apps to run on start-up
 local run_on_start_up = {
     "xset r rate 200 95",
-    "picom -b",
+    -- "setxkbmap us -variant colemak",
+    -- "xmodmap /home/mia/.Xmodmap",
+    "picom -b --xrender-sync-fence",
     "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1",
     "greenclip daemon",
-   "unclutter",
+    "unclutter",
 }
 
 
@@ -89,6 +94,7 @@ end
 -- Import theme
 local beautiful = require("beautiful")
 beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/" .. theme .. "-theme.lua")
+-- beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/opaque-gray-theme.lua")
 
 -- Import hotkeys appearance
 require("components.hotkeys_window")
@@ -112,8 +118,8 @@ awful.rules.rules = create_rules(keys.clientkeys, keys.clientbuttons)
 -- }
 awful.layout.layouts = {
    awful.layout.suit.tile,
-   awful.layout.suit.tile.left,
-   awful.layout.suit.fair.horizontal,
+   -- awful.layout.suit.tile.left,
+   awful.layout.suit.fair,
    awful.layout.suit.floating,
    awful.layout.suit.max,
 }
@@ -168,8 +174,8 @@ client.connect_signal("property::urgent", function(c)
     c:jump_to()
 end)
 
-client.connect_signal("focus", function(c) c.border_color = "#777777" end)
-client.connect_signal("unfocus", function(c) c.border_color = "#393939" end)
+client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- ===================================================================
 -- Screen Change Functions (ie multi monitor)
 -- ===================================================================
