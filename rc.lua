@@ -28,7 +28,7 @@ local rofi_launcher_theme = "/home/mia/.config/rofi/themes/launchpad.rasi"
 
 -- define default apps (global variable so other components can access it)
 apps = {
-   browser = "brave",
+   browser = "firefox",
    vpn = "/home/mia/Security/autovpn",
    power_menu = "/home/mia/Scripts/sysmenu",
    audio_mixer = "pavucontrol",

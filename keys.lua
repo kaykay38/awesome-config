@@ -218,7 +218,7 @@ keys.globalkeys = gears.table.join(
       function()
          awful.spawn(apps.browser)
       end,
-      {description = "Brave Browser", group = "applications"}
+      {description = "Default Browser", group = "applications"}
    ),
 
    -- launch greenclip
@@ -607,15 +607,15 @@ keys.globalkeys = gears.table.join(
    ),
    awful.key({modkey, "Control"}, "h",
       function(c)
-         resize_client(client.focus, "right")
-      end,
-      {description = "resize window width right", group = "client"}
-   ),
-   awful.key({modkey, "Control"}, "l",
-      function(c)
          resize_client(client.focus, "left")
       end,
       {description = "resize window width left", group = "client"}
+   ),
+   awful.key({modkey, "Control"}, "l",
+      function(c)
+         resize_client(client.focus, "right")
+      end,
+      {description = "resize window width right", group = "client"}
    ),
 
    -- =========================================
