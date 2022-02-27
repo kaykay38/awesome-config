@@ -14,6 +14,7 @@ local wibox = require("wibox")
 local watch = require("awful.widget.watch")
 local dpi = require('beautiful').xresources.apply_dpi
 local clickable_container = require('widgets.clickable-container')
+local gears = require("gears")
 
 local GET_STATUS_CMD = '/usr/local/bin/playerstatus'
 local GET_CURRENT_SONG_CMD = '/usr/local/bin/tooltip-playerctl'
@@ -31,12 +32,13 @@ local function worker(user_args)
 
     local args = user_args or {}
 
-    local spotify_play_icon = args.spotify_play_icon or '/home/mia/.config/awesome/icons/spotify.svg'
-    local spotify_pause_icon = args.spotify_pause_icon or '/home/mia/.config/awesome/icons/spotify-gray.svg'
-    local mpv_play_icon = args.mpv_play_icon or '/home/mia/.config/awesome/icons/mpv.svg'
-    local mpv_pause_icon = args.mpv_pause_icon or '/home/mia/.config/awesome/icons/mpv-gray.svg'
-    local play_icon = args.mpv_play_icon or '/home/mia/.config/awesome/icons/play.svg'
-    local pause_icon = args.mpv_pause_icon or '/home/mia/.config/awesome/icons/pause.svg'
+    local player_icons_dir = gears.filesystem.get_configuration_dir()..'icons/player/'
+    local spotify_play_icon = args.spotify_play_icon or player_icons_dir..'spotify.svg'
+    local spotify_pause_icon = args.spotify_pause_icon or player_icons_dir..'spotify-gray.svg'
+    local mpv_play_icon = args.mpv_play_icon or player_icons_dir..'mpv.svg'
+    local mpv_pause_icon = args.mpv_pause_icon or player_icons_dir..'mpv-gray.svg'
+    local play_icon = args.mpv_play_icon or player_icons_dir..'play.svg'
+    local pause_icon = args.mpv_pause_icon or player_icons_dir..'pause.svg'
 
     local font = args.font or 'NotoSans Nerd Font 10'
     local dim_when_paused = args.dim_when_paused == nil and false or args.dim_when_paused

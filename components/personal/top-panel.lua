@@ -55,7 +55,6 @@ top_panel.create = function(s)
             }),
             -- require("widgets.playerctl"),
             require("widgets.weather"),
-            require("widgets.onedrive"),
             require("widgets.vpn"),
             require("widgets.network")(),
             require("widgets.wifi")(),

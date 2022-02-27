@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------
 --- Playerctl Widget
 --
--- Dependencies: playerctl, sb-playerctl
+-- Dependencies: playerctl, sb-playerctl, tooltip-playerctl
 --
 --
 -- @author kaykay38
@@ -100,8 +100,8 @@ local update_tooltip = function()
 						.. '\n<b>Artist</b>: ' .. cur_artist
 					elseif cur_title ~= nil then
 						widget_tooltip.markup = '<b>Title</b>: ' .. cur_title
-					-- else
-					-- 		widget_tooltip.markup = 'No metadata'
+					else
+                        widget_tooltip.markup = 'No metadata'
 					end
 				end
 			)

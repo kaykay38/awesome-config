@@ -70,6 +70,7 @@ local run_on_start_up = {
     "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1",
     "greenclip daemon",
     "unclutter",
+    "syncthingtray",
 }
 
 

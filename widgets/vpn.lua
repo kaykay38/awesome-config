@@ -3,7 +3,6 @@
 --
 -- Depends: ip
 --
---
 -- @author kaykay38
 -- @copyright 2021 kaykay38
 -- @widget vpn
